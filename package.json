@@ -9,6 +9,7 @@
     "lint": "tslint -c tslint.json src/**/*.ts",
     "lint2": "eslint src --ext .ts --fix",
     "prepublish": "npm run build",
+    "knex": "node --no-warnings tsx ./node_modules/knex/bin/cli.js --knexfile ./knexfile.ts",
     "dev": "tsx watch src/server.ts"
   },
   "keywords": [],
