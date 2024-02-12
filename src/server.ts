@@ -1,12 +1,12 @@
 import fastify from 'fastify'
-import { knex } from './databse'
+import { knex } from './database'
 
 const app = fastify()
 
 app.get('/hello', async () => {
-  const tables = await knex('sqlite_schema').select('*')
-  console.log('teste')
-  return tables
+  const transaction = await knex('transactions').select('*')
+
+  return transaction
 })
 
 app
