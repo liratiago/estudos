@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { checkSessionIdExists } from '../middlewares/check-session-id-exists'
 
 export async function transactionsRoutes(app: FastifyInstance) {
-  app.addHook('preHandler', async (request, reply) => {
+  app.addHook('preHandler', async (request) => {
     console.log(`[${request.method}] ${request.url}`)
   })
 
@@ -13,7 +13,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
     {
       preHandler: checkSessionIdExists,
     },
-    async (request, reply) => {
+    async (request) => {
       const { sessionId } = request.cookies
 
       const transactions = await knex('transactions')
@@ -72,6 +72,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
     )
 
     let sessionId = request.cookies.sessionId
+
     if (!sessionId) {
       sessionId = crypto.randomUUID()
       reply.cookie('sessionId', sessionId, {
@@ -80,7 +81,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
       })
     }
 
-    const transactions = await knex('transactions').insert({
+    await knex('transactions').insert({
       id: crypto.randomUUID(),
       title,
       amount: type == 'credit' ? amount : amount * -1,
