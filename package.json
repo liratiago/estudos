@@ -5,7 +5,7 @@
   "main": "./lib/index.js",
   "engines":{
     "node": ">= 20"
-  }
+  },
   "scripts": {
     "test": "vitest",
     "build": "tsup src --out-dir build",
